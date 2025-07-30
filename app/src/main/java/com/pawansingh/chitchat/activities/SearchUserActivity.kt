@@ -1,5 +1,6 @@
 package com.pawansingh.chitchat.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -9,12 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.FirebaseDatabase
+import com.pawansingh.chitchat.BaseActivity
 import com.pawansingh.chitchat.R
 import com.pawansingh.chitchat.adapters.SearchUserAdapter
 import com.pawansingh.chitchat.databinding.ActivitySearchUserBinding
 import com.pawansingh.chitchat.models.Users
 
-class SearchUserActivity : AppCompatActivity() {
+class SearchUserActivity : BaseActivity() {
 
     private lateinit var binding : ActivitySearchUserBinding
     private lateinit var adapter : SearchUserAdapter
@@ -31,6 +33,7 @@ class SearchUserActivity : AppCompatActivity() {
         }
 
         binding.toolbar.setNavigationOnClickListener {
+            startActivity(Intent(this,MainActivity::class.java))
             finish()
         }
 

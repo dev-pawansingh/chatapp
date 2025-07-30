@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_margin="5dp"
+                android:layout_gravity="center_vertical"
+                android:padding="8dp"
+                android:background="@drawable/rounded_grey_bg"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_person"
+                app:tint="@color/primary"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:backgroundTint="#D4448AFF"
+                android:weightSum="4"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="7dp">
+
+                <LinearLayout
+                    android:layout_weight="4"
+                    android:layout_width="0dp"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:text="Developer Pawan Singh"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:layout_marginTop="2dp"
+                        android:id="@+id/lastText"
+                        android:layout_width="wrap_content"
+                        android:textColor="#6F6F6F"
+                        android:layout_height="wrap_content"
+                        android:text="last message text"
+                        android:maxLines="1"
+                        android:textSize="17sp"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:background="@drawable/online_bg"
+                        android:layout_gravity="center"
+                        android:visibility="visible"
+                        android:paddingStart="4dp"
+                        android:paddingTop="1dp"
+                        android:paddingBottom="1dp"
+                        android:paddingEnd="4dp"
+                        android:id="@+id/isOnline"
+                        android:layout_marginTop="3dp"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Online"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="4dp"/>
+
+                    <TextView
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/time"
+                        android:layout_marginTop="3dp"
+                        android:textColor="#6F6F6F"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12:49 p.m"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+</LinearLayout>

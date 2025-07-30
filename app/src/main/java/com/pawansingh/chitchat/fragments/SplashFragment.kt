@@ -11,7 +11,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.auth.User
 import com.pawansingh.chitchat.R
+import com.pawansingh.chitchat.activities.ChatActivity
 import com.pawansingh.chitchat.activities.MainActivity
 import com.pawansingh.chitchat.databinding.FragmentSplashBinding
 import com.pawansingh.chitchat.viewmodels.AuthViewModel
@@ -29,22 +32,36 @@ class SplashFragment : Fragment() {
     ): View {
         binding = FragmentSplashBinding.inflate(layoutInflater)
 
-        Handler(Looper.getMainLooper()).postDelayed({
+        val otherUserId = arguments?.getString("userId")
 
-            lifecycleScope.launch {
-                viewModel.isCurrentUser.collect{
-                    if(it){
-                        startActivity(Intent(requireContext(), MainActivity::class.java))
-                        requireActivity().finishAffinity()
-                    }else{
-                        findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+        if(otherUserId.isNullOrBlank()){
+            // User opened the app
+            Handler(Looper.getMainLooper()).postDelayed({
+
+                lifecycleScope.launch {
+                    viewModel.isCurrentUser.collect{
+                        if(it){
+                            startActivity(Intent(requireContext(), MainActivity::class.java))
+                            requireActivity().finishAffinity()
+                        }else{
+                            findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+                        }
                     }
                 }
-            }
-        },2500)
+            },2500)
+        }else{
+            // User entered through notification
+            val userName = arguments?.getString("userName") ?: "Unknown user"
+            val intent = Intent(requireContext(), ChatActivity::class.java).apply {
+                putExtra("userId", otherUserId)
+                putExtra("userName", userName)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 
+            }
+            startActivity(intent)
+            requireActivity().finish()
+        }
         return binding.root
     }
-
 
 }

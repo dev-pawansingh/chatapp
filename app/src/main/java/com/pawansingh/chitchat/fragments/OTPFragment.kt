@@ -67,7 +67,7 @@ class OTPFragment : Fragment() {
                     bundle.putString("number",number)
                     findNavController().navigate(R.id.action_OTPFragment_to_userDetail,bundle)
                 }else if(!it){
-                    Toast.makeText(requireContext(),"Login Failed",Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(requireContext(),"Login Failed",Toast.LENGTH_SHORT).show()
                     binding.progressBar.visibility = View.INVISIBLE
                 }
             }

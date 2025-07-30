@@ -1,26 +1,24 @@
 package com.pawansingh.chitchat.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.firebase.Timestamp
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.Query
+import com.pawansingh.chitchat.BaseActivity
 import com.pawansingh.chitchat.R
 import com.pawansingh.chitchat.Utils
 import com.pawansingh.chitchat.adapters.ChatAdapter
-import com.pawansingh.chitchat.adapters.SearchUserAdapter
 import com.pawansingh.chitchat.databinding.ActivityChatBinding
 import com.pawansingh.chitchat.models.ChatRoomModel
 import com.pawansingh.chitchat.models.MessageModel
-import com.pawansingh.chitchat.models.Users
 import kotlin.String
 
-class ChatActivity : AppCompatActivity() {
+class ChatActivity : BaseActivity() {
 
     lateinit var binding : ActivityChatBinding
     var chatRoomId : String = ""
@@ -41,6 +39,7 @@ class ChatActivity : AppCompatActivity() {
         setupToolbar()
         createGetChatRoom()
         setupMessageAdapter()
+
         binding.sendBtn.setOnClickListener {
             var message : String = binding.message.text.toString()
             if (message.isEmpty()){
@@ -49,14 +48,11 @@ class ChatActivity : AppCompatActivity() {
                 sendMessage(message)
             }
         }
-
-
     }
 
     fun setupMessageAdapter(){
         val query = FirebaseDatabase.getInstance().getReference("ChatRoom").child(chatRoomId).child("messages")
             .orderByChild("timeStamp/seconds")
-
 
         val option = FirebaseRecyclerOptions.Builder<MessageModel>()
             .setQuery(query, MessageModel::class.java)
@@ -68,20 +64,20 @@ class ChatActivity : AppCompatActivity() {
         }
         binding.messageList.adapter = adapter
         adapter?.startListening()
+        adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                binding.messageList.scrollToPosition(adapter!!.itemCount - 1)
+            }
+        })
     }
 
     fun sendMessage(message : String){
-//        val chatRoom = ChatRoomModel(lastMessageTimeStamp = Timestamp.now() , lastMessageSenderId = Utils.getUserId())
-//        FirebaseDatabase.getInstance().getReference("ChatRoom").child("$chatRoomId").setValue(chatRoom)
-//
-//        val messageModel : MessageModel = MessageModel(message,Utils.getUserId(), Timestamp.now())
-//        FirebaseDatabase.getInstance().getReference("ChatRoom").child("$chatRoomId").child("messages").push().setValue(messageModel)
-//        binding.message.setText("")
 
         val chatRoomRef = FirebaseDatabase.getInstance().getReference("ChatRoom").child(chatRoomId)
 
         // Update last message time and sender only
-        chatRoomRef.child("lastMessageTimeStamp").setValue(System.currentTimeMillis())
+        chatRoomRef.child("lastMessageTimeStamp").setValue(-System.currentTimeMillis())
         chatRoomRef.child("lastMessageSenderId").setValue(Utils.getUserId())
 
         val messageModel = MessageModel(message,Utils.getUserId(), System.currentTimeMillis())
@@ -92,6 +88,9 @@ class ChatActivity : AppCompatActivity() {
 
     fun setupToolbar(){
         binding.toolbar.setNavigationOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
             finish()
         }
         val otherUser = intent.getStringExtra("userName")
@@ -101,6 +100,7 @@ class ChatActivity : AppCompatActivity() {
     fun createGetChatRoom(){
         user2Id = intent.getStringExtra("userId").toString()
         chatRoomId = getChatRoomId(Utils.getUserId(),user2Id)
+
         FirebaseDatabase.getInstance().getReference("ChatRoom").child(chatRoomId).get()
             .addOnSuccessListener { snapshot ->
                 if(snapshot.exists()){
@@ -113,6 +113,10 @@ class ChatActivity : AppCompatActivity() {
                     val chatRoom = ChatRoomModel(chatRoomId,userIds, System.currentTimeMillis(),"")
                     FirebaseDatabase.getInstance().getReference("ChatRoom").child("$chatRoomId").setValue(chatRoom)
                 }
+                // Map chatroom to both users and save it in UserChatRoom list
+                val userChatRoomRef = FirebaseDatabase.getInstance().getReference("UserChatRooms")
+                userChatRoomRef.child(Utils.getUserId()).child(chatRoomId).setValue(true)
+                userChatRoomRef.child(user2Id).child(chatRoomId).setValue(true)
 
             }.addOnFailureListener {
             }
@@ -126,5 +130,4 @@ class ChatActivity : AppCompatActivity() {
             u2 + "_" + u1
         }
     }
-
 }

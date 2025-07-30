@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/offWhite"
+    android:background="@drawable/register_background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.OTPFragment">
 
@@ -26,14 +26,15 @@
         android:orientation="vertical">
 
         <ImageView
-            app:tint="@color/primary"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            app:tint="#FFD600"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:src="@drawable/ic_otp"/>
 
         <TextView
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
+            android:textColor="@color/black"
             android:layout_height="wrap_content"
             android:text="Check for OTP on"
             android:textSize="22sp"/>
@@ -42,20 +43,16 @@
             android:id="@+id/number"
             android:layout_marginTop="5dp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+91 9999999999"
             android:textSize="20sp"/>
-        <ProgressBar
-            android:layout_marginTop="5dp"
-            android:id="@+id/progressBar"
-            android:visibility="invisible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
 
         <TextView
             android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
+            android:textColor="@color/black"
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:text="Enter the OTP below" />
@@ -66,6 +63,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginHorizontal="17dp"
             android:layout_marginVertical="17dp"
+            app:boxStrokeColor="@color/black"
+            app:boxStrokeWidth="2dp"
             app:boxCornerRadiusBottomEnd="17dp"
             app:boxCornerRadiusTopStart="17dp"
             app:boxCornerRadiusTopEnd="17dp"
@@ -75,6 +74,7 @@
                 android:id="@+id/et_otp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/black"
                 android:drawableStart="@drawable/ic_otp"
                 android:drawablePadding="10dp"
                 android:inputType="number"
@@ -90,8 +90,16 @@
             android:text="Continue"
             android:backgroundTint="@color/primary"
             android:textSize="25sp"
+            android:textColor="@color/white"
             android:layout_marginHorizontal="20dp"
             app:cornerRadius="17dp"/>
+        <ProgressBar
+            android:layout_marginTop="5dp"
+            android:id="@+id/progressBar"
+            android:visibility="invisible"
+            android:indeterminateTint="@color/secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

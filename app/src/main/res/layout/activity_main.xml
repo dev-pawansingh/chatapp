@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
@@ -33,6 +34,8 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:defaultFocusHighlightEnabled="true"
         app:menu="@menu/bottom_view_menu"
         android:layout_alignParentBottom="true"
         app:itemTextAppearanceActive="@color/black"

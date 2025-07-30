@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".activities.ChatActivity">
 
@@ -18,6 +20,7 @@
         app:titleTextColor="@color/white" />
     
     <androidx.recyclerview.widget.RecyclerView
+        android:background="@drawable/chat_bg"
         android:padding="5dp"
         android:id="@+id/messageList"
         android:layout_width="match_parent"
@@ -25,27 +28,27 @@
         android:layout_above="@id/bottomLayout"
         android:layout_below="@id/toolbar"/>
     
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:weightSum="5"
+        android:gravity="center_vertical"
         android:layout_alignParentBottom="true"
         android:padding="5dp"
-        android:layout_marginStart="4dp"
         android:id="@+id/bottomLayout">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/et_message"
-            android:layout_centerInParent="true"
+            android:layout_weight="5"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_margin="3dp"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/sendBtn"
-            app:boxCornerRadiusBottomEnd="17dp"
-            app:boxCornerRadiusTopStart="17dp"
-            app:boxCornerRadiusTopEnd="17dp"
-            app:boxCornerRadiusBottomStart="17dp">
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/message"
@@ -53,7 +56,8 @@
                 android:layout_height="match_parent"
                 android:textColor="@color/black"
                 android:inputType="text"
-                android:hint="Enter your text..."
+                android:layout_weight="0"
+                android:hint="Type your message here..."
                 android:textSize="20sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -61,17 +65,15 @@
         <ImageView
             android:padding="3dp"
             android:layout_margin="5dp"
-            android:layout_centerInParent="true"
             android:id="@+id/sendBtn"
-            android:layout_width="40dp"
-            app:tint="@color/primary"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_send"
-            android:layout_alignParentEnd="true"/>
+            android:background="@drawable/rounded_blue_bg"
+            android:scaleType="center"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:tint="@color/white"
+            android:src="@drawable/ic_send"/>
 
 
-    </RelativeLayout>
-
-
+    </LinearLayout>
 
 </RelativeLayout>
